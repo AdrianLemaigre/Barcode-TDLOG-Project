@@ -1,5 +1,4 @@
-function U=gradient_general(r,lambda,eps,dx, pas, it)
-V = imread('cb.png');
+function U=gradient_general(V,r,lambda,eps,dx, pas, it)
 U=V;
 F=lambda*TV(U,eps,dx)+gradient_TP(U,V,r);
 for k=1:it
@@ -10,7 +9,7 @@ for k=1:it
 end
 
 clf
-I=mat2gray(U);
+I=uint8(U);
 imshow(I)
 title=sprintf('deblurring4-%0.2f-%0.2f-%0.2f-%0.2f-%0.2f-%e.jpg',r,lambda,eps,dx, pas, it);
 imwrite(I,title);
