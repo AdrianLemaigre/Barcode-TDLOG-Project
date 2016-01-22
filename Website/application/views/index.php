@@ -11,11 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<form action="<?php echo base_url('Upload/upload_file'); ?>" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
-					<td>Title</td>
-					<td>:</td>
-					<td><input type="text" name="title"></td>
-				</tr>
-				<tr>
 					<td>Image</td>
 					<td>:</td>
 					<td><input type="file" name="picture"></td>

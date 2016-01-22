@@ -6,15 +6,20 @@ class Upload extends CI_Controller {
 		$this->load->view('index');
 	}
 
+	public function results($filename) {
+		$this->load->helper('search');
+		$data = array();
+		$data['result'] = '01221922291';
+
+		$this->load->view('index');
+		$this->load->view('result', $data);
+		unlink("file/$filename");
+	}
+
 	public function upload_file() {
 		$status = "";
 		$msg = "";
 		$filename = 'picture';
-
-		if (empty($_POST['title'])) {
-			$status = "error";
-			$msg = "Please enter title";
-		}
 
 		if ($status != 'error') {
 			$config['upload_path'] = 'file/';
@@ -28,31 +33,18 @@ class Upload extends CI_Controller {
 				$status = 'error';
 				$msg = $this->upload->display_errors('', '');
 			} else {
-				$this->load->model('file_model');
 				$data = $this->upload->data();
-				$file_id = $this->file_model->post_file($data['file_name'], $_POST['title']);
-
-				if ($file_id) {
-					redirect("Upload/results/$filename");
-				} else {
-					unlink($data['full_path']);
-					$status = 'error';
-					$msg = 'please try again';
-				}
+				$filename = $data['file_name'];
 			}
 
+			echo $filename;
 			@unlink($_FILES[$filename]);
 		}
 
-		echo json_encode(array('status' => $status, 'msg' => $msg));
-	}
-
-	public function results($filename) {
-		$this->load->helper('search');
-		$data = array();
-		$data['result'] = barcode($filename);
-
-		$this->load->view('index');
-		$this->load->view('result', $data);
+		if ($status == 'error') {
+			echo json_encode(array('status' => $status, 'msg' => $msg));
+		} else {
+			$this->results($filename);
+		}
 	}
 }
