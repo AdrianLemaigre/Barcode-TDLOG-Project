@@ -9,7 +9,7 @@ class Upload extends CI_Controller {
 	public function results($filename) {
 		$this->load->helper('search');
 		$data = array();
-		$data['result'] = '01221922291';
+		$data['result'] = barcode($filename);
 
 		$this->load->view('index');
 		$this->load->view('result', $data);
@@ -37,7 +37,6 @@ class Upload extends CI_Controller {
 				$filename = $data['file_name'];
 			}
 
-			echo $filename;
 			@unlink($_FILES[$filename]);
 		}
 
