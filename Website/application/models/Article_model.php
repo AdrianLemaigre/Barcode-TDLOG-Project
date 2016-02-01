@@ -1,7 +1,7 @@
 <?php
 
-class ArticlesModel extends CI_Model {
-	protected $table = 'articles';
+class Article_Model extends CI_Model {
+	protected $table = 'Articles';
 
 	/**
 	 * Adds an article to the database
@@ -72,8 +72,8 @@ class ArticlesModel extends CI_Model {
 	 * Returns the article with the matching barcode
 	 * @param string $barcode : barcode of the article
 	 */
-	public function getArticles($barcode) {
-		if ($barcode == null || !is_int($barcode) || strlen((string) $barcode) != 13) {
+	public function search($barcode) {
+		if ($barcode == null || !is_string($barcode) || strlen($barcode) != 13) {
 			return false;
 		}
 

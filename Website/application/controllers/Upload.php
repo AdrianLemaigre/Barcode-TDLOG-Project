@@ -9,17 +9,29 @@ class Upload extends CI_Controller {
 	public function results($filename) {
 		$this->load->helper('search');
 		$data = array();
-		$data['result'] = barcode($filename);
+		$results = barcode($filename);
+		unlink("file/$filename");
 
 		$this->load->view('index');
-		$this->load->view('result', $data);
-		unlink("file/$filename");
+
+		if (count($results) == 0) {
+			$this->load->view('not_found');
+		} else {
+			$this->load->view('result', $results[0]);
+
+		}
 	}
 
 	public function upload_file() {
 		$status = "";
 		$msg = "";
 		$filename = 'picture';
+
+		if (empty($_FILES['picture'])) {
+			$this->load->view('MissingImage');
+			$this->load->view('index');
+			return;
+		}
 
 		if ($status != 'error') {
 			$config['upload_path'] = 'file/';
