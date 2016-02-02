@@ -1,7 +1,7 @@
 <?php
 
 class Article_Model extends CI_Model {
-	protected $table = 'Articles';
+	protected $table = 'articles';
 
 	/**
 	 * Adds an article to the database
@@ -10,9 +10,9 @@ class Article_Model extends CI_Model {
 	 * @param int $price : price of the article
 	 * @param int $disponibility : number of disponible items
 	 **/
-	public function post($name, $barcode, $price, $disponibility, $description = null, $data = null) {
+	public function post_article($name, $barcode, $price, $disponibility, $description = null, $data = null) {
 		if ($name == null || !is_string($name) ||
-			$barcode == null || !is_string($barcode) || strlen($barcode) != 13 ||
+			$barcode == null || !is_string($barcode) || strlen($barcode) != 13 || !is_numeric($barcode) ||
 			$price == null || !is_int($price) ||
 			$disponibility == null || !is_int($disponibility)) {
 			return false;

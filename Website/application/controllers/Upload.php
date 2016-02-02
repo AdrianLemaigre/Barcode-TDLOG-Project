@@ -7,18 +7,20 @@ class Upload extends CI_Controller {
 	}
 
 	public function results($filename) {
+		$this->load->model('article_model');
 		$this->load->helper('search');
 		$data = array();
-		$results = barcode($filename);
+		$code = barcode($filename);
+		$data = $this->article_model->search($code);
 		unlink("file/$filename");
 
 		$this->load->view('index');
 
-		if (count($results) == 0) {
-			$this->load->view('not_found');
+		if (count($data) == 0) {
+			$data['code'] = $code;
+			$this->load->view('not_found', $data);
 		} else {
-			$this->load->view('result', $results[0]);
-
+			$this->load->view('result', $data[0]);
 		}
 	}
 
@@ -57,5 +59,17 @@ class Upload extends CI_Controller {
 		} else {
 			$this->results($filename);
 		}
+	}
+
+	public function upload_article() {
+		$this->load->model('article_model');
+		$this->article_model->post_article(
+			$this->input->post('name'),
+			$this->input->post('barcode'),
+			(int)$this->input->post('price'),
+			(int)$this->input->post('disponibility'),
+			$this->input->post('description'),
+			$this->input->post('data'));
+		$this->load->view('index');
 	}
 }
