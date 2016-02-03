@@ -4,12 +4,12 @@
     <div class="Ticket">
         <h3>Description : </h3>
         <br>
-        <div><?php echo $description; ?></div>
+        <div><?php echo nl2br($description); ?></div>
     </div>
     <div class="Ticket">
         <h3>Data : </h3>
         <br>
-        <div><?php echo $data; ?></div>
+        <div><?php echo nl2br($data); ?></div>
     </div>
 
     <table class="Table">
